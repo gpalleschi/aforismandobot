@@ -1,6 +1,6 @@
-import * as Token from './src/token.js';
-import * as Constants from './src/constants.js';
-import * as data from './db/aforismi.js';
+import * as Token from '../../src/token.js';
+import * as Constants from '../../src/constants.js';
+import * as data from '../../db/aforismi.js';
 import { Telegraf } from 'telegraf';
 
 const bot = new Telegraf(Token.TELEGRAM_BOT_TOKEN)
