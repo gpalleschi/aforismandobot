@@ -1,1 +1,1 @@
-export const TELEGRAM_BOT_TOKEN = {Insert Telegram Bot Token};
+export const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
