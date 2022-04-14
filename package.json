@@ -1,0 +1,17 @@
+{
+  "name": "aforismandobot",
+  "version": "1.0.0",
+  "description": "Telegram My Favourite Quotes Bot",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "GNNK71",
+  "license": "GNU General Public License v3.0",
+  "dependencies": {
+    "nodemon": "^2.0.15",
+    "telegraf": "^4.7.0"
+  }
+}

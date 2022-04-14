@@ -1,0 +1,1 @@
+export const TELEGRAM_BOT_TOKEN = {Insert Telegram Bot Token};
