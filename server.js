@@ -2,7 +2,15 @@ import * as Constants from './src/constants.js';
 import * as data from './db/aforismi.js';
 import { Telegraf } from 'telegraf';
 
-const bot = new Telegraf(process.env.BOT_TOKEN)
+const API_TOKEN = process.env.BOT_TOKEN || '';
+const PORT = process.env.PORT || 3000;
+const URL = process.env.URL || 'https://aforismando.herokuapp.com';
+
+const bot = new Telegraf(API_TOKEN)
+// Heroku Configuration
+bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
+bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
+
 console.log('Service started ' + Constants.VERSION)
 
 let language='it';
