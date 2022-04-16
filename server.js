@@ -11,7 +11,7 @@ const bot = new Telegraf(API_TOKEN)
 bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
 bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
 
-console.log('Service started ' + Constants.VERSION)
+console.log('Service started ' + Constants.VERSION + ' On port : ' + PORT + ' URL : ' + URL);
 
 let language='it';
 

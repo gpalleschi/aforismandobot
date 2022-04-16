@@ -1,5 +1,5 @@
 export const BOT_NAME ='Aforismandobot';
-export const VERSION ='1.1.0 Beta';
+export const VERSION ='1.2.0 Beta';
 export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attraverso @Aforismandobot potrai richiedere un aforisma casuale\nscrivendo direttamente 'aforisma'.\n\nInoltre attraverso i seguenti comandi potrai :\n\n" +
                                   "   /version  : Richiedere la versione del bot\n" +
 				  "   /aforismi : Vedere quanti aforismi sono caricati\n" +
