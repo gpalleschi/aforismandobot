@@ -5,6 +5,7 @@ A Telegram Quote Bot. @Aforismandobot. It was my first bot.
 <hr/>
 <div align="center" class="flex-container" style="margin: 20px;">
 <img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
+<img src="./img/screenshot0.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 <img src="./img/screenshot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 </div>
 <hr/>
