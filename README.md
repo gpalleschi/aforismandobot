@@ -1,11 +1,11 @@
 <div style="flex">
-<img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 40%; width:40%;"/>
+<img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
 A Telegram Quote Bot. @Aforismandobot. It was my first bot.
 <hr/>
-<div align="center" class="flex-container" style="margin: 35px;">
-<img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin-right:30px; height: 30%; width:20%;"/>
-<img src="./img/screenshot.jpg" alt="Aforismando" style="height: 20%; width:20%;"/>
+<div align="center" class="flex-container" style="margin: 20px;">
+<img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
+<img src="./img/screenshot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 </div>
 <hr/>
 
