@@ -2,12 +2,12 @@
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 40%; width:40%;"/>
 </div>
 A Telegram Quote Bot. @Aforismandobot. It was my first bot.
-
-<div class="flex-container">
-<img src="./img/qraforismandobot.jpg" alt="Aforismando" style="height: 20%; width:20%;"/>
+<hr/>
+<div align="center" class="flex-container" style="margin: 35px;">
+<img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin-right:30px; height: 30%; width:20%;"/>
 <img src="./img/screenshot.jpg" alt="Aforismando" style="height: 20%; width:20%;"/>
 </div>
-
+<hr/>
 
 ### Prerequisites  
 
