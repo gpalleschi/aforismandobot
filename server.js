@@ -22,6 +22,16 @@ bot.start((context) => {
 	context.reply(Constants.HELP_TEXT['it']);
 })
 
+const getQuote = async () => {
+  let response = await fetch(URLQUOTEAPI + language)
+
+  if (response.status === 200) {
+    return await '"' + response.quote + '"\n\n' + response.author + '\n';
+  } else {
+    return 'Error in retrive quote : ' + err.description;	  
+  }
+}
+
 // Free Message
 bot.on('text', context=>{
 	let res='';
@@ -37,18 +47,7 @@ bot.on('text', context=>{
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
-		res = async () => { await fetch(URLQUOTEAPI + language, {
-			method: 'get',
-			headers: {'Content-Type': 'application/json'},
-		        })
-                        .then(response => {
-		             return '"' + response.quote + '"\n\n' + response.author + '\n';	 
-                         })    
-		         .catch(err => {
-		             console.log(err)
-	                     return 'Error in retrive quote : ' + err.description;		  
-		         })
-		      }
+		res = getQuote();
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
