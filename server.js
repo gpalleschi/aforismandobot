@@ -36,7 +36,7 @@ const getQuote = async () => {
 }
 
 // Free Message
-bot.on('text', context=>{
+bot.on('text', async context=>{
 	let res='';
 	let found = false;
 	const text=context.update.message.text.toUpperCase();
@@ -51,7 +51,7 @@ bot.on('text', context=>{
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
 		console.log('Before getQuote');
-		await getQuote()
+		getQuote()
 		   .then( (ret) => {
                         res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
 		   })
