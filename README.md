@@ -2,6 +2,8 @@
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
 A Telegram Quote Bot. @Aforismandobot. It is my first bot.
+
+This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).     
 <hr/>
 <div align="center" class="flex-container" style="margin: 20px;">
 <img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>

@@ -21,14 +21,22 @@ bot.start((context) => {
 	context.reply(Constants.HELP_TEXT['it']);
 })
 
+const getInfo = async () => {
+  let response = await fetch(Constants.URLINFOAPI + language)
+
+  if (response.status === 200) {
+       const json = await response.json();
+       return json;
+  } else {
+       throw new Error('Error : ' + err.description);	  
+  }
+}
+
 const getQuote = async () => {
   let response = await fetch(Constants.URLQUOTEAPI + language)
 
-  console.log(response);	  
   if (response.status === 200) {
-//     return await '"' + response.quote + '"\n\n' + response.author + '\n';
        const json = await response.json();
-       console.log('In getQuote : ' + json);
        return json;
   } else {
        throw new Error('Error : ' + err.description);	  
@@ -46,11 +54,16 @@ bot.on('text', async context=>{
 	} else if ( text.toUpperCase() === '/HELP' ) {  
 		res = Constants.HELP_TEXT['it'];
 	} else if ( text.toUpperCase() === '/AFORISMI' ) {  
+		await getInfo()
+		   .then( (ret) => {
+                        res = 'Totale aforismi caricati : ' + ret.quotes + ' di \n\n' + ret.authors + ' autori.\n';
+		   })
+		   .catch( (error) => {
+			res = error;   
+		   });
+
 		res = 'Totale aforismi caricati : ' + data.aforismi.length + '\n';
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
-		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
-		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
-		console.log('Before getQuote');
 		await getQuote()
 		   .then( (ret) => {
                         res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
@@ -58,7 +71,6 @@ bot.on('text', async context=>{
 		   .catch( (error) => {
 			res = error;   
 		   });
-		console.log('After getQuote : <' + JSON.stringify(res)  + '>');
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
