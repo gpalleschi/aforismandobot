@@ -38,13 +38,8 @@ bot.on('text', context=>{
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
 		fetch(URLQUOTEAPI + language, {
-			method: 'post',
+			method: 'get',
 			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({
-				id_oper: 'T', 
-				id_user: user['id_user'],
-                                id_product: userData.id_product
-			})
 		 })
                  .then(response => {
 		       res = '"' + response.quote + '"\n\n' + response.author + '\n';	 
