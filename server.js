@@ -1,6 +1,7 @@
 import * as Constants from './src/constants.js';
 import * as data from './db/aforismi.js';
 import { Telegraf } from 'telegraf';
+import fetch from "node-fetch";
 
 const API_TOKEN = process.env.BOT_TOKEN || '';
 const PORT = process.env.PORT || 3000;
