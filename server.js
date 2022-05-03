@@ -48,6 +48,7 @@ bot.on('text', context=>{
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
+		console.log('Before getQuote');
 		getQuote()
 		   .then( (ret) => {
                         res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
@@ -55,6 +56,7 @@ bot.on('text', context=>{
 		   .catch( (error) => {
 			res = error;   
 		   });
+		console.log('After getQuote');
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
