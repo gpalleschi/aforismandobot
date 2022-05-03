@@ -5,6 +5,7 @@ import { Telegraf } from 'telegraf';
 const API_TOKEN = process.env.BOT_TOKEN || '';
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://aforismando.herokuapp.com';
+const URLQUOTEAPI = 'https://quotes-api-three.vercel.app/api/randomquote?language=';
 
 const bot = new Telegraf(API_TOKEN)
 // Heroku Configuration
@@ -33,8 +34,24 @@ bot.on('text', context=>{
 	} else if ( text.toUpperCase() === '/AFORISMI' ) {  
 		res = 'Totale aforismi caricati : ' + data.aforismi.length + '\n';
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
-		const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
-		res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
+		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
+		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
+		fetch(URLQUOTEAPI + language, {
+			method: 'post',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				id_oper: 'T', 
+				id_user: user['id_user'],
+                                id_product: userData.id_product
+			})
+		 })
+                 .then(response => {
+		       res = '"' + response.quote + '"\n\n' + response.author + '\n';	 
+                 })    
+		 .catch(err => {
+	           res = 'Error in retrive quote : ' + err.description;		  
+		   console.log(err)
+		 })
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
