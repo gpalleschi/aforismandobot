@@ -81,7 +81,7 @@ bot.on('text', async context=>{
 		   if ( found ) break;
 		}
 
-		if ( res === '' ) {
+		if ( res === '{}' ) {
 		   res = Constants.NOT_UNDERSTAND_TEXT['it'][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT['it'].length)];
 		}
 	}
