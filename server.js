@@ -6,7 +6,6 @@ import fetch from "node-fetch";
 const API_TOKEN = process.env.BOT_TOKEN || '';
 const PORT = process.env.PORT || 3000;
 const URL = process.env.URL || 'https://aforismando.herokuapp.com';
-const URLQUOTEAPI = 'https://quotes-api-three.vercel.app/api/randomquote?language=';
 
 const bot = new Telegraf(API_TOKEN)
 // Heroku Configuration
@@ -23,12 +22,14 @@ bot.start((context) => {
 })
 
 const getQuote = async () => {
-  let response = await fetch(URLQUOTEAPI + language)
+  let response = await fetch(Constants.URLQUOTEAPI + language)
 
+  console.log(response);	  
   if (response.status === 200) {
-    return await '"' + response.quote + '"\n\n' + response.author + '\n';
+//     return await '"' + response.quote + '"\n\n' + response.author + '\n';
+       return await response.json();
   } else {
-    return 'Error in retrive quote : ' + err.description;	  
+       throw new Error('Error : ' + err.description);	  
   }
 }
 
@@ -47,7 +48,13 @@ bot.on('text', context=>{
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
-		res = getQuote();
+		getQuote()
+		   .then( (ret) => {
+                        res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
+		   })
+		   .catch( (error) => {
+			res = error;   
+		   });
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
@@ -68,16 +75,6 @@ bot.on('text', context=>{
 
   	context.reply(res)
 })
-
-// // In Line mode 
-// bot.on('inline_query', (ctx) => {
-//   // TODO : Codify inline messages	
-//   const result = []
-//   // Explicit usage
-//   ctx.telegram.answerInlineQuery(ctx.inlineQuery.id, result)
-//   // Using context shortcut
-//   ctx.answerInlineQuery(result)
-// })
 
 // 
 bot.launch()
