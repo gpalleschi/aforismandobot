@@ -1,8 +1,8 @@
 export const BOT_NAME ='Aforismandobot';
-export const VERSION ='1.3.0 Beta';
+export const VERSION ='2.0.0 Beta';
 
 export const URLQUOTEAPI='https://quotes-api-three.vercel.app/api/randomquote?language='; 
-export const URLINFOAPI='https://quotes-api-three.vercel.app/api/randomquote?language=';
+export const URLINFOAPI='https://quotes-api-three.vercel.app/api/info?language=';
 
 export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attraverso @Aforismandobot potrai richiedere un aforisma casuale\nscrivendo direttamente 'aforisma'.\n\nInoltre attraverso i seguenti comandi potrai :\n\n" +
                                   "   /version  : Richiedere la versione del bot\n" +
@@ -17,6 +17,8 @@ export const UNDERSTAND = [ { "words" : ["PERCH"],
                               "answer" : ["Niente.","Aspetto che mi chiedi qualcosa.","Si va avanti.","Bene e tu?"] },
                             { "words" : ["STAI"],
                               "answer" : ["Abbastanza Bene.","Si campa.","Si va avanti.","Bene e tu ?","Sono Triste."] },
+                            { "words" : ["COME","COSA"],
+                              "answer" : ["Non lo so.","Non mi va di rispondere.","No Comment.","Non mi far parlare","A volte è meglio tacere."] },
                             { "words" : ["CIAO","SALVE"],
                               "answer" : ["Ciao.","Salve.","Hello!!!","Chi si rivede.","Hola!!!"] },
                             { "words" : ["TEMPO","SOLE "],
