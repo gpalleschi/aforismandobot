@@ -36,8 +36,8 @@ const getQuote = async () => {
 }
 
 // Free Message
-bot.on('text', async context=>{
-	let res='';
+bot.on('text', context=>{
+	let res='{}';
 	let found = false;
 	const text=context.update.message.text.toUpperCase();
 
