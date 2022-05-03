@@ -28,6 +28,7 @@ const getQuote = async () => {
   if (response.status === 200) {
 //     return await '"' + response.quote + '"\n\n' + response.author + '\n';
        const json = await response.json();
+       console.log('In getQuote : ' + json);
        return json;
   } else {
        throw new Error('Error : ' + err.description);	  
