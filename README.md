@@ -1,7 +1,7 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot. @Aforismandobot. It was my first bot.
+A Telegram Quote Bot. @Aforismandobot. It is my first bot.
 <hr/>
 <div align="center" class="flex-container" style="margin: 20px;">
 <img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
@@ -32,6 +32,3 @@ npm start
 ### License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE 3.0 License - see the [LICENSE](LICENSE) file for details  
-
-
-
