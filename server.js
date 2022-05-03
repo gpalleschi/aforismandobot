@@ -1,5 +1,4 @@
 import * as Constants from './src/constants.js';
-import * as data from './db/aforismi.js';
 import { Telegraf } from 'telegraf';
 import fetch from "node-fetch";
 
@@ -56,7 +55,7 @@ bot.on('text', async context=>{
 	} else if ( text.toUpperCase() === '/AFORISMI' ) {  
 		await getInfo()
 		   .then( (ret) => {
-                        res = 'Totale aforismi caricati : ' + ret.quotes + ' di \n\n' + ret.authors + ' autori.\n';
+                        res = 'Totale aforismi caricati : ' + ret.quotes + ' di ' + ret.authors + ' autori.\n';
 		   })
 		   .catch( (error) => {
 			res = error;   
