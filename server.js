@@ -60,8 +60,6 @@ bot.on('text', async context=>{
 		   .catch( (error) => {
 			res = error;   
 		   });
-
-		res = 'Totale aforismi caricati : ' + data.aforismi.length + '\n';
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
 		await getQuote()
 		   .then( (ret) => {
