@@ -37,7 +37,7 @@ bot.on('text', context=>{
 	} else if ( text.toUpperCase().includes('AFORISMA') ) {
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
-		const ret = async () => {fetch(URLQUOTEAPI + language, {
+		res = async () => { await fetch(URLQUOTEAPI + language, {
 			method: 'get',
 			headers: {'Content-Type': 'application/json'},
 		        })
@@ -49,7 +49,6 @@ bot.on('text', context=>{
 	                     return 'Error in retrive quote : ' + err.description;		  
 		         })
 		      }
-		res = ret;
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
