@@ -36,7 +36,7 @@ const getQuote = async () => {
 }
 
 // Free Message
-bot.on('text', context=>{
+bot.on('text', async context=>{
 	let res='{}';
 	let found = false;
 	const text=context.update.message.text.toUpperCase();
@@ -51,14 +51,14 @@ bot.on('text', context=>{
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
 		console.log('Before getQuote');
-		getQuote()
+		await getQuote()
 		   .then( (ret) => {
                         res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
 		   })
 		   .catch( (error) => {
 			res = error;   
 		   });
-		console.log('After getQuote : <' + res + '>');
+		console.log('After getQuote : <' + JSON.stringify(res)  + '>');
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
