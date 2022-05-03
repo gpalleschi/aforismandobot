@@ -51,14 +51,14 @@ bot.on('text', context=>{
 		// const aforisma = data.aforismi[Math.floor(Math.random() * data.aforismi.length)];
 		// res = '"' + aforisma.quote + '"\n\n' + aforisma.author + '\n';
 		console.log('Before getQuote');
-		getQuote()
+		await getQuote()
 		   .then( (ret) => {
                         res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
 		   })
 		   .catch( (error) => {
 			res = error;   
 		   });
-		console.log('After getQuote');
+		console.log('After getQuote : <' + res + '>');
 	} else {
 	        found = false;
 		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
