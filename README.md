@@ -1,7 +1,24 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot. @Aforismandobot. It is my first bot.
+A Telegram Quote Bot Multilingual (English, Italian and Spanish). @Aforismandobot. It is my first bot. 
+
+What can you do with this bot? 
+
+| Command   | Language     | Description  
+| :-------- | :------- | :-------- | 
+| /version | en | Show server version in english |
+| /versión | es | Show server version in spanish |
+| /versione | it | Show server version in italian |
+| /aiuto | it | Show an help in italian |
+| /help | en | Show an help in english |
+| /ayuda | es | Show an help in spanish |
+| /quotes | en | Show how many quote are loaded in english |
+| /aforismos | es | Show how many quote are loaded in spanish |
+| /aforismi | it | Show how many quote are loaded in italian |
+| quote | en | Show random quote in english |
+| aforismo | es | Show random quote in spanish |
+| aforisma | it | Show random quote in italian |
 
 This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).     
 <hr/>

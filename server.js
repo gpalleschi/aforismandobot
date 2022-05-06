@@ -15,13 +15,24 @@ console.log('Service started ' + Constants.VERSION + ' On port : ' + PORT + ' UR
 
 let language='it';
 
+const getLanguage = (context) => {
+      let setLanguage = 'en';
+      if ( context.update.message.from.language_code === 'it' || 
+	   context.update.message.from.language_code === 'en' || 
+	   context.update.message.from.language_code === 'es' ) {
+           setLanguage = context.update.message.from.language_code;
+      }
+      return setLanguage;
+}
+
 // Start Boot
 bot.start((context) => {
-	context.reply(Constants.HELP_TEXT['it']);
+	let language = getLanguage(context);
+	context.reply(Constants.HELP_TEXT[language]);
 })
 
-const getInfo = async () => {
-  let response = await fetch(Constants.URLINFOAPI + language)
+const getInfo = async (quote_language) => {
+  let response = await fetch(Constants.URLINFOAPI + quote_language)
 
   if (response.status === 200) {
        const json = await response.json();
@@ -31,8 +42,28 @@ const getInfo = async () => {
   }
 }
 
-const getQuote = async () => {
-  let response = await fetch(Constants.URLQUOTEAPI + language)
+const getInfoByLanguage = async (quote_language) => {
+	let retFunc = '{}';
+	await getInfo(quote_language)
+		   .then( (ret) => {
+			if ( quote_language === 'it') {
+                           retFunc = 'Totale aforismi caricati : ' + ret.quotes + ' di ' + ret.authors + ' autori.\n';
+			} else {
+			  if ( quote_language === 'en') {
+                             retFunc = 'Total quotes loaded : ' + ret.quotes + ' of ' + ret.authors + ' authors.\n';
+			  } else {
+                             retFunc = 'Total aforismos almacenado : ' + ret.quotes + ' de ' + ret.authors + ' autores.\n';
+			  }
+			}
+		   })
+		   .catch( (error) => {
+			retFunc = error;   
+		   });
+		   return retFunc;
+}
+
+const getQuote = async (quote_language) => {
+  let response = await fetch(Constants.URLQUOTEAPI + quote_language)
 
   if (response.status === 200) {
        const json = await response.json();
@@ -41,48 +72,53 @@ const getQuote = async () => {
        throw new Error('Error : ' + err.description);	  
   }
 }
+
+const getQuotesByLanguage = async (quote_language) => {
+	let retFunc = '{}';
+	await getQuote(quote_language)
+		   .then( (ret) => {
+                        retFunc = '"' + ret.quote + '"\n\n' + ret.author + '\n';
+		   })
+		   .catch( (error) => {
+			retFunc = error;   
+		   });
+	return retFunc;	   
+}	
 
 // Free Message
 bot.on('text', async context=>{
 	let res='{}';
-	let found = false;
 	const text=context.update.message.text.toUpperCase();
+
+	language = getLanguage(context);
 
 	if ( text.toUpperCase() === '/VERSION' ) {
 		res = ' version : ' + Constants.VERSION;
+	} else if ( text.toUpperCase() === '/VERSIONE' ) {
+		res = ' versione : ' + Constants.VERSION;
+	} else if ( text.toUpperCase() === '/VERSIÓN' ) {
+		res = ' versión : ' + Constants.VERSION;
+	} else if ( text.toUpperCase() === '/AYUDA' ) {  
+		res = Constants.HELP_TEXT['es'];
 	} else if ( text.toUpperCase() === '/HELP' ) {  
+		res = Constants.HELP_TEXT['en'];
+	} else if ( text.toUpperCase() === '/AIUTO' ) {  
 		res = Constants.HELP_TEXT['it'];
 	} else if ( text.toUpperCase() === '/AFORISMI' ) {  
-		await getInfo()
-		   .then( (ret) => {
-                        res = 'Totale aforismi caricati : ' + ret.quotes + ' di ' + ret.authors + ' autori.\n';
-		   })
-		   .catch( (error) => {
-			res = error;   
-		   });
-	} else if ( text.toUpperCase().includes('AFORISMA') ) {
-		await getQuote()
-		   .then( (ret) => {
-                        res = '"' + ret.quote + '"\n\n' + ret.author + '\n';
-		   })
-		   .catch( (error) => {
-			res = error;   
-		   });
+		res = await getInfoByLanguage('it');
+	} else if ( text.toUpperCase() === '/AFORISMOS' ) {  
+		res = await getInfoByLanguage('es');
+	} else if ( text.toUpperCase() === '/QUOTES' ) {  
+		res = await getInfoByLanguage('en');
+	} else if ( text.toUpperCase() === 'AFORISMA' ) {
+		res = await getQuotesByLanguage('it');
+	} else if ( text.toUpperCase() === 'AFORISMO' ) {
+		res = await getQuotesByLanguage('es');
+	} else if ( text.toUpperCase() === 'QUOTE' ) {
+		res = await getQuotesByLanguage('en');
 	} else {
-	        found = false;
-		for(let j=0;j<Constants.UNDERSTAND.length;j++) {
-		   for(let i=0;i<Constants.UNDERSTAND[j].words.length;i++) {
-		      if ( text.toUpperCase().includes(Constants.UNDERSTAND[j].words[i]) ) {
-			      res = Constants.UNDERSTAND[j].answer[Math.floor(Math.random() * Constants.UNDERSTAND[j].answer.length)];
-	                      found = true;
-			      break;
-		      }
-		   }	
-		   if ( found ) break;
-		}
-
 		if ( res === '{}' ) {
-		   res = Constants.NOT_UNDERSTAND_TEXT['it'][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT['it'].length)];
+		   res = Constants.NOT_UNDERSTAND_TEXT[language][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT['it'].length)];
 		}
 	}
 
