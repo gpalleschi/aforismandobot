@@ -4,6 +4,7 @@
   "description": "Telegram My Favourite Quotes Bot",
   "main": "server.js",
   "type": "module",
+  "engines": { "node": "16.x" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
