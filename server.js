@@ -1,22 +1,22 @@
 import * as Constants from './src/constants.js';
-import { Telegraf } from 'telegraf';
 import fetch from "node-fetch";
+import Botgram from 'botgram';
 
 const API_TOKEN = process.env.BOT_TOKEN || '';
-const PORT = process.env.PORT || 3000;
-const URL = process.env.URL || 'https://aforismando.herokuapp.com';
 
-const bot = new Telegraf(API_TOKEN)
-// Heroku Configuration
-bot.telegram.setWebhook(`${URL}/bot${API_TOKEN}`);
-bot.startWebhook(`/bot${API_TOKEN}`, null, PORT)
+if (!API_TOKEN) {
+  console.error('Seems like you forgot to pass Telegram Bot Token. I can not proceed...');
+  process.exit(1);
+}
 
-console.log('Service started ' + Constants.VERSION + ' On port : ' + PORT + ' URL : ' + URL);
+const bot = new Botgram(API_TOKEN);
+
+console.log('Service started ' + Constants.VERSION );
 
 let language='it';
 
-const getLanguage = (context) => {
-      let setLanguage = 'en';
+const getLanguage = () => {
+      let setLanguage = language;
       if ( context.update.message.from.language_code === 'it' || 
 	   context.update.message.from.language_code === 'en' || 
 	   context.update.message.from.language_code === 'es' ) {
@@ -24,12 +24,6 @@ const getLanguage = (context) => {
       }
       return setLanguage;
 }
-
-// Start Boot
-bot.start((context) => {
-	let language = getLanguage(context);
-	context.reply(Constants.HELP_TEXT[language]);
-})
 
 const getInfo = async (quote_language) => {
   let response = await fetch(Constants.URLINFOAPI + quote_language)
@@ -86,11 +80,10 @@ const getQuotesByLanguage = async (quote_language) => {
 }	
 
 // Free Message
-bot.on('text', async context=>{
-	let res='{}';
-	const text=context.update.message.text.toUpperCase();
+const onMessage = async (msg, reply) => {
 
-	language = getLanguage(context);
+	let res='{}';
+	const text=msg.text.toUpperCase();
 
 	if ( text.toUpperCase() === '/VERSION' ) {
 		res = ' version : ' + Constants.VERSION;
@@ -122,12 +115,7 @@ bot.on('text', async context=>{
 		}
 	}
 
-  	context.reply(res)
-})
+	reply.text(res);
+}
 
-// 
-bot.launch()
-
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+bot.text(onMessage);

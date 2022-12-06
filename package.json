@@ -11,6 +11,7 @@
   "author": "GNNK71",
   "license": "GNU General Public License v3.0",
   "dependencies": {
+    "botgram": "^2.2.0",
     "node-fetch": "^2.6.7",
     "nodemon": "^2.0.15",
     "telegraf": "^4.7.0"
