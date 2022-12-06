@@ -1,7 +1,8 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot Multilingual (English, Italian and Spanish). @Aforismandobot. It is my first bot. 
+A Telegram Quote Bot Multilingual (English, Italian and Spanish). @Aforismandobot. It is my first bot.   
+Actually is hosted on [glitch](https://glitch.com/~aforismando-telegram-bot).   
 
 What can you do with this bot? 
 
