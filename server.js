@@ -15,18 +15,9 @@ console.log('Service started ' + Constants.VERSION );
 
 let language='it';
 
-const getLanguage = () => {
-      let setLanguage = language;
-      if ( context.update.message.from.language_code === 'it' || 
-	   context.update.message.from.language_code === 'en' || 
-	   context.update.message.from.language_code === 'es' ) {
-           setLanguage = context.update.message.from.language_code;
-      }
-      return setLanguage;
-}
-
 const getInfo = async (quote_language) => {
   let response = await fetch(Constants.URLINFOAPI + quote_language)
+  language = quote_language;
 
   if (response.status === 200) {
        const json = await response.json();
@@ -38,6 +29,7 @@ const getInfo = async (quote_language) => {
 
 const getInfoByLanguage = async (quote_language) => {
 	let retFunc = '{}';
+	language = quote_language;
 	await getInfo(quote_language)
 		   .then( (ret) => {
 			if ( quote_language === 'it') {
@@ -57,6 +49,7 @@ const getInfoByLanguage = async (quote_language) => {
 }
 
 const getQuote = async (quote_language) => {
+  language = quote_language;
   let response = await fetch(Constants.URLQUOTEAPI + quote_language)
 
   if (response.status === 200) {
@@ -69,6 +62,7 @@ const getQuote = async (quote_language) => {
 
 const getQuotesByLanguage = async (quote_language) => {
 	let retFunc = '{}';
+	language = quote_language;
 	await getQuote(quote_language)
 		   .then( (ret) => {
                         retFunc = '"' + ret.quote + '"\n\n' + ret.author + '\n';
@@ -85,25 +79,7 @@ const onMessage = async (msg, reply) => {
 	let res='{}';
 	const text=msg.text.toUpperCase();
 
-	if ( text.toUpperCase() === '/VERSION' ) {
-		res = ' version : ' + Constants.VERSION;
-	} else if ( text.toUpperCase() === '/VERSIONE' ) {
-		res = ' versione : ' + Constants.VERSION;
-	} else if ( text.toUpperCase() === '/VERSIÓN' ) {
-		res = ' versión : ' + Constants.VERSION;
-	} else if ( text.toUpperCase() === '/AYUDA' ) {  
-		res = Constants.HELP_TEXT['es'];
-	} else if ( text.toUpperCase() === '/HELP' ) {  
-		res = Constants.HELP_TEXT['en'];
-	} else if ( text.toUpperCase() === '/AIUTO' ) {  
-		res = Constants.HELP_TEXT['it'];
-	} else if ( text.toUpperCase() === '/AFORISMI' ) {  
-		res = await getInfoByLanguage('it');
-	} else if ( text.toUpperCase() === '/AFORISMOS' ) {  
-		res = await getInfoByLanguage('es');
-	} else if ( text.toUpperCase() === '/QUOTES' ) {  
-		res = await getInfoByLanguage('en');
-	} else if ( text.toUpperCase() === 'AFORISMA' ) {
+	if ( text.toUpperCase() === 'AFORISMA' ) {
 		res = await getQuotesByLanguage('it');
 	} else if ( text.toUpperCase() === 'AFORISMO' ) {
 		res = await getQuotesByLanguage('es');
@@ -111,7 +87,7 @@ const onMessage = async (msg, reply) => {
 		res = await getQuotesByLanguage('en');
 	} else {
 		if ( res === '{}' ) {
-		   res = Constants.NOT_UNDERSTAND_TEXT[language][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT['it'].length)];
+		   res = Constants.NOT_UNDERSTAND_TEXT[language][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT[language].length)];
 		}
 	}
 
@@ -119,3 +95,44 @@ const onMessage = async (msg, reply) => {
 }
 
 bot.text(onMessage);
+
+bot.command("start", (msg, reply) =>
+  reply.text(Constants.HELP_TEXT[language]));
+
+bot.command("ayuda", (msg, reply) => {
+  language = 'es';
+  reply.text(Constants.HELP_TEXT['es']);
+});
+
+bot.command("aiuto", (msg, reply) => {
+  language = 'it';
+  reply.text(Constants.HELP_TEXT['it']);
+});
+
+bot.command("help", (msg, reply) => {
+  language = 'en';
+  reply.text(Constants.HELP_TEXT['en']);
+});
+
+bot.command("aforismi", async (msg, reply) => {
+	let res = await getInfoByLanguage('it');
+	reply.text(res);
+});
+
+bot.command("aforismos", async (msg, reply) => {
+	let res = await getInfoByLanguage('es');
+	reply.text(res);
+});
+
+bot.command("quotes", async (msg, reply) => {
+	let res = await getInfoByLanguage('en');
+	reply.text(res);
+});
+
+bot.command("version","versión","versione", (msg, reply) => 
+  reply.text(Constants.VERSION));
+
+bot.command((msg, reply) => {
+   let res = Constants.NOT_UNDERSTAND_TEXT[language][Math.floor(Math.random() * Constants.NOT_UNDERSTAND_TEXT[language].length)];
+   reply.text(res);
+});
