@@ -2,7 +2,7 @@
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
 A Telegram Quote Bot Multilingual (English, Italian and Spanish). @Aforismandobot. It is my first bot.   
-Actually is hosted on [glitch](https://glitch.com/~aforismando-telegram-bot).   
+Actually is hosted on a IONOS VPS.
 
 What can you do with this bot? 
 
@@ -21,7 +21,7 @@ What can you do with this bot?
 | aforismo | es | Show random quote in spanish |
 | aforisma | it | Show random quote in italian |
 
-This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).     
+This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).  
 <hr/>
 <div align="center" class="flex-container" style="margin: 20px;">
 <img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
