@@ -2,6 +2,7 @@ export const BOT_NAME ='Aforismandobot';
 export const VERSION ='4.2.0';
 
 export const URLQUOTEAPI='https://quotes-api-three.vercel.app/api/randomquote?language='; 
+export const URLQUOTEIMGAPI='https://quotes-api-three.vercel.app/api/randomimage?language='; 
 export const URLINFOAPI='https://quotes-api-three.vercel.app/api/info?language=';
 
 export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attraverso @Aforismandobot potrai richiedere un aforisma casuale\nscrivendo direttamente 'aforisma'.\n\nInoltre attraverso i seguenti comandi potrai :\n\n" +

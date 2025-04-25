@@ -4,7 +4,9 @@
   "description": "Telegram My Favourite Quotes Bot",
   "main": "server.js",
   "type": "module",
-  "engines": { "node": "16.x" },
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
@@ -14,6 +16,7 @@
   "dependencies": {
     "botgram": "^2.2.0",
     "node-fetch": "^3.3.2",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.10",
+    "sharp": "^0.34.1"
   }
 }
