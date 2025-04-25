@@ -1,7 +1,7 @@
 import * as Constants from './src/constants.js';
 import fetch from "node-fetch";
 import Botgram from 'botgram';
-const sharp = require('sharp');
+import sharp from 'sharp';
 
 const API_TOKEN = process.env.BOT_TOKEN || '';
 
@@ -26,7 +26,7 @@ const getInfo = async (quote_language) => {
         const json = await response.json();
         return json;
     } else {
-        throw new Error('Error : ' + err.description);
+        throw new Error('Error in ' +  Constants.URLINFOAPI + quote_language);
     }
 }
 
@@ -128,16 +128,16 @@ const onMessage = async (msg, reply) => {
         res = await getQuotesImgByLanguage('it');
         if (res.msg === 'No Error') {
             isImg = true;
-            const imageBuffer = await fetch(ret.url).then(r => r.buffer());
+            const imageBuffer = await fetch(res.url).then(r => r.buffer());
             const svg = `
 				<svg width="800" height="450">
 				<rect width="100%" height="100%" fill="rgba(0,0,0,0.4)"/>
 				<text x="50%" y="50%" font-size="40" font-style="italic"
 						font-weight="bold" fill="white" text-anchor="middle" alignment-baseline="middle">
-					“${ret.quote}” — ${ret.author}
+					“${res.quote}” — ${res.author}
 				</text>
 				</svg>`;
-            const compositeImage = await Sharp(imageBuffer)
+            const compositeImage = await sharp(imageBuffer)
                 .resize(
                     800,
                     450,
