@@ -17,9 +17,12 @@ What can you do with this bot?
 | /quotes | en | Show how many quote are loaded in english |
 | /aforismos | es | Show how many quote are loaded in spanish |
 | /aforismi | it | Show how many quote are loaded in italian |
-| quote | en | Show random quote in english |
-| aforismo | es | Show random quote in spanish |
-| aforisma | it | Show random quote in italian |
+| quote | en | Show random text quote in english |
+| aforismo | es | Show random text quote in spanish |
+| aforisma | it | Show random text quote in italian |
+| quoteim | en | Show random image quote in english |
+| aforismoim | es | Show random image quote in spanish |
+| aforismaim | it | Show random image quote in italian |
 
 This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).  
 <hr/>
