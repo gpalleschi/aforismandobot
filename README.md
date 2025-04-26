@@ -1,7 +1,7 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot Multilingual (English, Italian and Spanish). @Aforismandobot. It is my first bot.   
+A Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.   
 Actually is hosted on a IONOS VPS.
 
 What can you do with this bot? 
@@ -32,8 +32,8 @@ This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_
 
 ### Prerequisites  
 
-* Node v16.13.1 or upper
-* npm  v7.19.1 or upper
+* Node v22.14.0 or upper
+* npm  11.3.0 or upper
 
 ### Built With  
 * [Visual Code Editor](https://code.visualstudio.com)  

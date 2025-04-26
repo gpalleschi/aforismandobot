@@ -14,9 +14,9 @@
   "author": "GNNK71",
   "license": "GNU General Public License v3.0",
   "dependencies": {
-    "botgram": "^2.2.0",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.10",
-    "sharp": "^0.34.1"
+    "sharp": "^0.34.1",
+    "telegraf": "^4.16.3"
   }
 }
