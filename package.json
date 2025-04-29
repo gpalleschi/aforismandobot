@@ -1,6 +1,6 @@
 {
   "name": "aforismandobot",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Telegram My Favourite Quotes Bot",
   "main": "server.js",
   "type": "module",

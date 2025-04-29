@@ -73,7 +73,7 @@ const getQuotesByLanguage = async (quote_language) => {
     language = quote_language;
     try {
         const ret = await getQuote(quote_language);
-        return `"${ret.quote}"\n\n${ret.author}\n`;
+        return `“${ret.quote}”\n\n${ret.author}\n`;
     } catch (error) {
         return error.message;
     }
@@ -136,13 +136,14 @@ const createMultilineSVG = (quote, author) => {
         lines.push(line.trim());
     }
 
-    let tspans = lines
-        .map(
-            (l, i) => `<tspan x="50%" dy="${i === 0
-                ? '0'
-                : '1.2em'}">${l}</tspan>`
-        )
-        .join('');
+    if (lines.length > 0) {
+        lines[0] = `“${lines[0]}`; // apre
+        lines[lines.length - 1] += `”`; // chiude
+    }
+
+    let tspans = lines.map((l, i) => 
+        `<tspan x="50%" dy="${i === 0 ? '0' : '1.2em'}">${l}</tspan>`
+    ).join('');
 
     const svg = `
     <svg width="800" height="450" xmlns="http://www.w3.org/2000/svg">
@@ -157,6 +158,7 @@ const createMultilineSVG = (quote, author) => {
     return svg;
 }
 
+
 // 📩 Quando arriva un messaggio di testo libero
 bot.on('text', async (ctx) => {
     let isImg = false;
@@ -169,12 +171,12 @@ bot.on('text', async (ctx) => {
     if (text === 'AFORISMA') {
         res = await getQuotesByLanguage('it');
     } else if (text === 'AFORISMAIM' || text === 'AFORISMOIM' || text == 'QUOTEIM') {
-        if (text === 'AFORISMAIM') {
-            res = await getQuotesImgByLanguage('it');
-        } else if (text === 'AFORISMOIM') {
-            res = await getQuotesImgByLanguage('es');
+        if ( text === 'AFORISMAIM' ) {
+           res = await getQuotesImgByLanguage('it');
+        } else if ( text === 'AFORISMOIM' ) {
+           res = await getQuotesImgByLanguage('es');
         } else {
-            res = await getQuotesImgByLanguage('en');
+           res = await getQuotesImgByLanguage('en');
         }
         if (res.msg === 'No Error') {
             isImg = true;
@@ -183,9 +185,9 @@ bot.on('text', async (ctx) => {
             const svg = createMultilineSVG(res.quote, res.author);
 
             const logoBuffer = await sharp('./img/qrlogo.png')
-                .resize(56, 80) // ad esempio: ridimensioniamo il logo a 80x80px
-                .png()
-                .toBuffer();
+		    .resize(56, 80) // ad esempio: ridimensioniamo il logo a 80x80px
+		    .png()
+		    .toBuffer();
 
             const compositeImage = await sharp(imageBuffer)
                 .resize(
@@ -197,12 +199,13 @@ bot.on('text', async (ctx) => {
                     {
                         input: Buffer.from(svg),
                         blend: 'over'
-                    }, {
-                        input: logoBuffer,
-                        top: 450 - 80 - 20, // 450 altezza totale - altezza logo - margine (10px)
-                        left: 20, // 20px da sinistra
-                        blend: 'over'
-                    }
+                    },
+        {
+            input: logoBuffer,
+            top: 450 - 80 - 20, // 450 altezza totale - altezza logo - margine (10px)
+            left: 20,           // 10px da sinistra
+            blend: 'over'
+        }
                 ])
                 .png()
                 .toBuffer();
@@ -237,3 +240,4 @@ bot.on('message', (ctx) => {
 
 // Avvia il bot
 bot.launch();
+
