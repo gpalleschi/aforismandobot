@@ -191,7 +191,7 @@ bot.on('text', async (ctx) => {
             const svg = createMultilineSVG(res.quote, res.author, res.width, res.height);
 
             const logoBuffer = await sharp('./img/qrlogo.png')
-                .resize(70, 100) // ad esempio: ridimensioniamo il logo a 80x80px
+                .resize(80, 118) // ad esempio: ridimensioniamo il logo a 80x80px
                 .png()
                 .toBuffer();
 
@@ -207,7 +207,7 @@ bot.on('text', async (ctx) => {
                         blend: 'over'
                     }, {
                         input: logoBuffer,
-                        top: res.height - 100 - 20, // url.height altezza totale - altezza logo - margine (10px)
+                        top: res.height - 118 - 20, // url.height altezza totale - altezza logo - margine (10px)
                         left: 20, // 10px da sinistra
                         blend: 'over'
                     }
