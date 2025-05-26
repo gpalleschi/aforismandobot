@@ -1,6 +1,6 @@
 {
   "name": "aforismandobot",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description": "Telegram My Favourite Quotes Bot",
   "main": "server.js",
   "type": "module",
@@ -14,6 +14,8 @@
   "author": "GNNK71",
   "license": "GNU General Public License v3.0",
   "dependencies": {
+    "fs": "^0.0.1-security",
+    "node-cron": "^4.0.7",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.1.10",
     "sharp": "^0.34.1",

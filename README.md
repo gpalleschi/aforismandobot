@@ -1,7 +1,8 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.   
+A Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.
+Every day at 09:00 am send a text with an english quote if you subscribe.   
 Actually is hosted on a IONOS VPS.
 
 What can you do with this bot? 
@@ -17,6 +18,9 @@ What can you do with this bot?
 | /quotes | en | Show how many quote are loaded in english |
 | /aforismos | es | Show how many quote are loaded in spanish |
 | /aforismi | it | Show how many quote are loaded in italian |
+| /sendquote | en | Send an English text quote every day at 9:00 am |
+| /checksend | en | Check if you are subscribed to quote daily send |
+| /delsend | en | Remove subscribcion to quote daily send |
 | quote | en | Show random text quote in english |
 | aforismo | es | Show random text quote in spanish |
 | aforisma | it | Show random text quote in italian |

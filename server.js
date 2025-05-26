@@ -1,10 +1,13 @@
 import {Telegraf} from 'telegraf';
+import cron from 'node-cron';
+import fs from 'fs';
 import {message} from 'telegraf/filters';
 import * as Constants from './src/constants.js';
 import fetch from 'node-fetch';
 import sharp from 'sharp';
 
 const API_TOKEN = process.env.BOT_TOKEN || '';
+const fileChatIds = 'chat_ids.json';
 
 if (!API_TOKEN) {
     console.error(
@@ -90,7 +93,9 @@ const getQuotesImgByLanguage = async (quote_language) => {
 }
 
 // 📜 Comandi
-bot.start((ctx) => ctx.reply(Constants.HELP_TEXT[language]));
+bot.start((ctx) => {
+    ctx.reply(Constants.HELP_TEXT[language])
+});
 bot.command('aiuto', (ctx) => {
     language = 'it';
     ctx.reply(Constants.HELP_TEXT['it']);
@@ -117,6 +122,73 @@ bot.command('quotes', async (ctx) => {
 });
 bot.command('version', (ctx) => ctx.reply(Constants.VERSION));
 bot.command('versione', (ctx) => ctx.reply(Constants.VERSION));
+
+
+// === GESTIONE FILE ===
+function getChatIds() {
+  if (!fs.existsSync(fileChatIds)) return [];
+  const data = fs.readFileSync(fileChatIds);
+  return JSON.parse(data);
+}
+
+function saveChatIds(chatIds) {
+  fs.writeFileSync(fileChatIds, JSON.stringify(chatIds));
+}
+
+// === COMANDI ===
+
+// /sendquote → iscrive l'utente
+bot.command('sendquote', (ctx) => {
+  const chatId = ctx.chat.id;
+  let chatIds = getChatIds();
+  if (!chatIds.includes(chatId)) {
+    chatIds.push(chatId);
+    saveChatIds(chatIds);
+    ctx.reply('✅ You are subscribed! You will receive the daily message.');
+    console.log(`Iscritto: ${chatId}`);
+  } else {
+    ctx.reply('ℹ️ You are already subscribed.');
+  }
+});
+
+// /checksend → controlla se iscritto
+bot.command('checksend', (ctx) => {
+  const chatId = ctx.chat.id;
+  const chatIds = getChatIds();
+  if (chatIds.includes(chatId)) {
+    ctx.reply('📬 You are already subscribed.');
+  } else {
+    ctx.reply('📭 You are not subscribed. Use sendquote to subscribe.');
+  }
+});
+
+// /delsend → cancella l'iscrizione
+bot.command('delsend', (ctx) => {
+  const chatId = ctx.chat.id;
+  let chatIds = getChatIds();
+  if (chatIds.includes(chatId)) {
+    chatIds = chatIds.filter(id => id !== chatId);
+    saveChatIds(chatIds);
+    ctx.reply('❌ You have been unsubscribed.');
+  } else {
+    ctx.reply('ℹ️ You are not subscribed.');
+  }
+});
+
+// === Daily Message ===
+// Every day at 09:00 am 
+cron.schedule('0 9 * * *', async () => {
+  const chatIds = getChatIds();
+  for (const chatId of chatIds) {
+    try {
+      const res = await getQuotesByLanguage('en');
+      await bot.telegram.sendMessage(chatId, res);
+      //await getQuoteImg(quote_language);
+    } catch (error) {
+      console.error(`Send Error for ${chatId}:`, error.response?.description || error.message || error);
+    }
+  }
+});
 
 const createMultilineSVG = (quote, author, width, height) => {
     const maxLineLength = 40; // max caratteri per riga
