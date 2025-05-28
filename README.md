@@ -18,9 +18,9 @@ What can you do with this bot?
 | /quotes | en | Show how many quote are loaded in english |
 | /aforismos | es | Show how many quote are loaded in spanish |
 | /aforismi | it | Show how many quote are loaded in italian |
-| /sendquote | en | Send an English text quote every day at 9:00 am |
-| /checksend | en | Check if you are subscribed to quote daily send |
-| /delsend | en | Remove subscribcion to quote daily send |
+| /sendquote | en | Send an English text quote every day at 9:00 am (GMT) |
+| /checksend | en | Check if you are subscribed to english text quote daily send |
+| /delsend | en | Remove subscribcion to english text quote daily send |
 | quote | en | Show random text quote in english |
 | aforismo | es | Show random text quote in spanish |
 | aforisma | it | Show random text quote in italian |
