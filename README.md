@@ -2,7 +2,7 @@
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
 A Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.
-Every day at 09:00 am send a text with an english quote if you subscribe.   
+Every day at 09:00 am GMT send a text with an english or spanish or italian quote if you subscribe.   
 Actually is hosted on a IONOS VPS.
 
 What can you do with this bot? 

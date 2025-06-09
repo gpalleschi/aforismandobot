@@ -263,8 +263,8 @@ bot.command('borraenvio', async (ctx) => {
 
 // === Daily Message ===
 // Every day at 09:00 am 
-// cron.schedule('0 9 * * *', async () => {
-cron.schedule('* * * * *', async () => {
+cron.schedule('0 9 * * *', async () => {
+// cron.schedule('* * * * *', async () => {
   const chatIds = await getChatIds();
   for (const { chatId, lang } of chatIds) {
     try {
