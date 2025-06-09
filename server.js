@@ -125,67 +125,154 @@ bot.command('versione', (ctx) => ctx.reply(Constants.VERSION));
 
 
 // === GESTIONE FILE ===
-function getChatIds() {
+
+async function getChatIds() {
   if (!fs.existsSync(fileChatIds)) return [];
-  const data = fs.readFileSync(fileChatIds);
-  return JSON.parse(data);
+  const data = await fs.readFileSync(fileChatIds);
+  const parsed = JSON.parse(data);
+  return Array.isArray(parsed) ? parsed : []; // ✅ Verifica che sia un array
 }
 
-function saveChatIds(chatIds) {
-  fs.writeFileSync(fileChatIds, JSON.stringify(chatIds));
+async function saveChatIds(chatIds) {
+   await fs.writeFile(fileChatIds, JSON.stringify(chatIds, null, 2), (err) => {
+     if (err) console.error('Errore salvataggio:', err);
+   });
 }
 
 // === COMANDI ===
 
-// /sendquote → iscrive l'utente
-bot.command('sendquote', (ctx) => {
+async function sendQuote(ctx, lang) {
   const chatId = ctx.chat.id;
-  let chatIds = getChatIds();
-  if (!chatIds.includes(chatId)) {
-    chatIds.push(chatId);
-    saveChatIds(chatIds);
-    ctx.reply('✅ You are subscribed! You will receive the daily message.');
-    console.log(`Iscritto: ${chatId}`);
+  let chatIds = await getChatIds();
+  const exists = chatIds.some(entry => (entry.chatId === chatId && entry.lang === lang));
+  if (!exists) {
+    chatIds.push({ chatId, lang });
+    // chatIds.push({"chatId": chatId, "lang": lang});
+    await saveChatIds(chatIds);
+    var msgToDisplay = "";
+    if ( lang === 'it' ) {
+        msgToDisplay = Constants.MSGALREADYSUBIT;
+    } else if ( lang === 'es' ) {
+        msgToDisplay = Constants.MSGALREADYSUBES;
+    } else {
+        msgToDisplay = Constants.MSGALREADYSUBEN;
+    }
+    ctx.reply(msgToDisplay);
+    // console.log(`Iscritto: ${chatId}`);
   } else {
     ctx.reply('ℹ️ You are already subscribed.');
+  }   
+}
+
+async function checkQuote(ctx, lang) {
+  var msgToDisplay = "";
+  const chatId = ctx.chat.id;
+  const chatIds = await getChatIds();
+//   console.log(typeof chatId, chatId); // dovrebbe stampare "number 398282569"
+//   console.log(typeof lang, lang);     // dovrebbe stampare "string 'en'"
+//   console.log(`Check for ${chatId} and language ${lang}:`)
+  const entry = chatIds.find(entry => (Number(entry.chatId) === Number(chatId) && String(entry.lang) === String(lang)));
+//   console.log(chatIds);
+//   console.log(chatIds.find(entry => entry.chatId == chatId && entry.lang == lang)); // prova con == per test
+  if ( entry ) {
+    if ( lang === 'it' ) {
+        msgToDisplay = Constants.MSGSUBIT;
+    } else if ( lang === 'es' ) {
+        msgToDisplay = Constants.MSGSUBES;
+    } else {
+        msgToDisplay = Constants.MSGSUBEN;
+    }
+    ctx.reply(msgToDisplay);
+  } else {
+    if ( lang === 'it' ) {
+        msgToDisplay = Constants.MSGNOSUBIT;
+    } else if ( lang === 'es' ) {
+        msgToDisplay = Constants.MSGNOSUBES;
+    } else {
+        msgToDisplay = Constants.MSGNOSUBEN;
+    }
+    ctx.reply(msgToDisplay);
   }
+}
+
+async function delQuote(ctx, lang) {
+  var msgToDisplay = "";
+  const chatId = ctx.chat.id;
+  let chatIds = await getChatIds();
+  const newChatIds = chatIds.filter(entry => (entry.chatId === chatId && entry.lang === lang));
+  if (newChatIds.length !== chatIds.length) {
+    await saveChatIds(newChatIds);
+    if ( lang === 'it' ) {
+        msgToDisplay = Constants.MSGUNSUBIT;
+    } else if ( lang === 'es' ) {
+        msgToDisplay = Constants.MSGUNSUBES;
+    } else {
+        msgToDisplay = Constants.MSGUNSUBEN;
+    }
+    ctx.reply(msgToDisplay);
+  } else {
+    if ( lang === 'it' ) {
+        msgToDisplay = Constants.MSGNOSUBIT;
+    } else if ( lang === 'es' ) {
+        msgToDisplay = Constants.MSGNOSUBES;
+    } else {
+        msgToDisplay = Constants.MSGNOSUBEN;
+    }
+    ctx.reply(msgToDisplay);
+  }
+}
+
+// /sendquote → iscrive l'utente
+bot.command('sendquote', (ctx) => {
+  sendQuote(ctx,'en');
+});
+
+bot.command('inviaaforisma', (ctx) => {
+  sendQuote(ctx,'it');
+});
+
+bot.command('enviaaforismo', (ctx) => {
+  sendQuote(ctx,'es');
 });
 
 // /checksend → controlla se iscritto
 bot.command('checksend', (ctx) => {
-  const chatId = ctx.chat.id;
-  const chatIds = getChatIds();
-  if (chatIds.includes(chatId)) {
-    ctx.reply('📬 You are already subscribed.');
-  } else {
-    ctx.reply('📭 You are not subscribed. Use sendquote to subscribe.');
-  }
+  checkQuote(ctx,'en');
+});
+
+bot.command('controllainvio', (ctx) => {
+  checkQuote(ctx,'it');
+});
+
+bot.command('chequeaenvio', (ctx) => {
+  checkQuote(ctx,'es');
 });
 
 // /delsend → cancella l'iscrizione
-bot.command('delsend', (ctx) => {
-  const chatId = ctx.chat.id;
-  let chatIds = getChatIds();
-  if (chatIds.includes(chatId)) {
-    chatIds = chatIds.filter(id => id !== chatId);
-    saveChatIds(chatIds);
-    ctx.reply('❌ You have been unsubscribed.');
-  } else {
-    ctx.reply('ℹ️ You are not subscribed.');
-  }
+bot.command('delsend', async (ctx) => {
+  delQuote(ctx,'en');
+});
+
+bot.command('cancellainvio', async (ctx) => {
+  delQuote(ctx,'it');
+});
+
+bot.command('borraenvio', async (ctx) => {
+  delQuote(ctx,'es');
 });
 
 // === Daily Message ===
 // Every day at 09:00 am 
-cron.schedule('0 9 * * *', async () => {
-  const chatIds = getChatIds();
-  for (const chatId of chatIds) {
+// cron.schedule('0 9 * * *', async () => {
+cron.schedule('* * * * *', async () => {
+  const chatIds = await getChatIds();
+  for (const { chatId, lang } of chatIds) {
     try {
-      const res = await getQuotesByLanguage('en');
+      const res = await getQuotesByLanguage(lang);
       await bot.telegram.sendMessage(chatId, res);
       //await getQuoteImg(quote_language);
     } catch (error) {
-      console.error(`Send Error for ${chatId}:`, error.response?.description || error.message || error);
+      console.error(`Send Error for ${chatId} and language ${lang}:`, error.response?.description || error.message || error);
     }
   }
 });

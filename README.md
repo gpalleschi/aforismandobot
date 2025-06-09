@@ -21,6 +21,12 @@ What can you do with this bot?
 | /sendquote | en | Send an English text quote every day at 9:00 am (GMT) |
 | /checksend | en | Check if you are subscribed to english text quote daily send |
 | /delsend | en | Remove subscribcion to english text quote daily send |
+| /inviaaforisma | it | Send an Italian text quote every day at 9:00 am (GMT) |
+| /controllainvio | it | Check if you are subscribed to italian text quote daily send |
+| /cancellainvio | it | Remove subscribcion to italian text quote daily send |
+| /enviaaforismo | es | Send an Spanish text quote every day at 9:00 am (GMT) |
+| /chequeaenvio | es | Check if you are subscribed to spanish text quote daily send |
+| /borraenvio | es | Remove subscribcion to spanish text quote daily send |
 | quote | en | Show random text quote in english |
 | aforismo | es | Show random text quote in spanish |
 | aforisma | it | Show random text quote in italian |
