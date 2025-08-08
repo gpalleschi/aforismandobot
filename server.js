@@ -264,12 +264,20 @@ bot.command('borraenvio', async (ctx) => {
 // === Daily Message ===
 // Every day at 09:00 am 
 cron.schedule('0 9 * * *', async () => {
+// Every minute
 // cron.schedule('* * * * *', async () => {
   const chatIds = await getChatIds();
   for (const { chatId, lang } of chatIds) {
     try {
-      const res = await getQuotesByLanguage(lang);
-      await bot.telegram.sendMessage(chatId, res);
+    // send text commentato inviera solo immagini 
+    //   const res = await getQuotesByLanguage(lang);
+    //   await bot.telegram.sendMessage(chatId, res);
+
+      // send img
+      const resImg = await getQuotesImgByLanguage(lang);
+      const quoteImg = await createImageQuote(resImg);
+      await bot.telegram.sendPhoto(chatId, { source: quoteImg });
+
       //await getQuoteImg(quote_language);
     } catch (error) {
       console.error(`Send Error for ${chatId} and language ${lang}:`, error.response?.description || error.message || error);
@@ -324,6 +332,39 @@ const createMultilineSVG = (quote, author, width, height) => {
     return svg;
 }
 
+const createImageQuote = async (res) => {
+    const imageBuffer = await fetch(res.url).then(r => r.buffer());
+
+    const svg = createMultilineSVG(res.quote, res.author, res.width, res.height);
+
+    const logoBuffer = await sharp('./img/qrlogo.png')
+        .resize(80, 118) // ad esempio: ridimensioniamo il logo a 80x118px
+        .png()
+        .toBuffer();
+
+    const compositeImage = await sharp(imageBuffer)
+        .resize(
+            res.width,
+            res.height,
+            {fit: 'cover'}
+        )
+        .composite([
+            {
+                input: Buffer.from(svg),
+                blend: 'over'
+            }, {
+                input: logoBuffer,
+                top: res.height - 118 - 20, // url.height altezza totale - altezza logo - margine (10px)
+                left: 20, // 10px da sinistra
+                blend: 'over'
+            }
+        ])
+        .png()
+        .toBuffer();
+    
+        return compositeImage;
+}
+
 // 📩 Quando arriva un messaggio di testo libero
 bot.on('text', async (ctx) => {
     let isImg = false;
@@ -345,37 +386,12 @@ bot.on('text', async (ctx) => {
         }
         if (res.msg === 'No Error') {
             isImg = true;
-            const imageBuffer = await fetch(res.url).then(r => r.buffer());
 
-            const svg = createMultilineSVG(res.quote, res.author, res.width, res.height);
-
-            const logoBuffer = await sharp('./img/qrlogo.png')
-                .resize(80, 118) // ad esempio: ridimensioniamo il logo a 80x80px
-                .png()
-                .toBuffer();
-
-            const compositeImage = await sharp(imageBuffer)
-                .resize(
-                    res.width,
-                    res.height,
-                    {fit: 'cover'}
-                )
-                .composite([
-                    {
-                        input: Buffer.from(svg),
-                        blend: 'over'
-                    }, {
-                        input: logoBuffer,
-                        top: res.height - 118 - 20, // url.height altezza totale - altezza logo - margine (10px)
-                        left: 20, // 10px da sinistra
-                        blend: 'over'
-                    }
-                ])
-                .png()
-                .toBuffer();
+            const quoteImg = await createImageQuote(res);
 
             // Usa direttamente il buffer con Telegraf
-            await ctx.replyWithPhoto({source: compositeImage});
+            // await ctx.replyWithPhoto({source: compositeImage});
+            await ctx.replyWithPhoto({source: quoteImg});
 
         } else {
             res = res.msg;
