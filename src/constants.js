@@ -1,5 +1,5 @@
 export const BOT_NAME ='Aforismandobot';
-export const VERSION ='5.3.0';
+export const VERSION ='5.4.0';
 
 export const URLQUOTEAPI='https://quotes-api-three.vercel.app/api/randomquote?language='; 
 export const URLQUOTEIMGAPI='https://quotes-api-three.vercel.app/api/randomimage?language='; 
@@ -28,8 +28,8 @@ export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attrav
 				  "   /inviaaforisma     : Invia un aforisma in italiano ogni giorno alle 9:00 GMT\n" +
 				  "   /controllainvio     : Controlla se sei iscritto all'invio giornaliero di un aforisma in italiano\n" +
 				  "   /cancellainvio     : Annulla l'iscrizione all'invio giornaliero di un aforisma in italiano\n" +
-				  "   aforisma     : Mostra un aforisma random in versione testo\n" +
-				  "   aforismaim   : Mostra un immagine con un aforisma random\n",
+				  "   /aforisma     : Mostra un aforisma random in versione testo\n" +
+				  "   /aforismaim   : Mostra un immagine con un aforisma random\n",
                            'en' : "What can you do with this bot?\n\nHello through @Aforismandobot you can request a random aphorism\nas text writing directly 'quote' or an image writing 'quoteim'.\n\nAlso using the following commands you can:\n\n" +
                                   "   /version  : Request the version of the bot\n" +
 				  "   /quotes   : See how many aphorisms are loaded\n" +
@@ -37,8 +37,8 @@ export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attrav
 				  "   /sendquote     : Send an English text quote every day at 9:00 am GMT\n" +
 				  "   /ckecksend     : Check if you are subscribed to quote daily send\n" +
 				  "   /delsend     : Remove subscribcion to quote daily send\n" +
-				  "   quote        : Show a random aphorism in text version\n" +
-				  "   quoteim      : Show an image with a random aphorism\n",
+				  "   /quote        : Show a random aphorism in text version\n" +
+				  "   /quoteim      : Show an image with a random aphorism\n",
                            'es' : "¿Qué puedes hacer con este bot?\n\nHola a través de @Aforismandobot puedes solicitar un aforismo aleatorio\ncomo texto escribiendo directamente 'aforismo' o una imagen escribiendo 'aforismoim'.\n\nTambién usando los siguientes comandos puedes:\n\n" +
                                   "   /versión   : Solicita la versión del bot\n" +
 				  "   /aforismos : Chequear cuantos aforismos estan almacenados\n" +
@@ -46,8 +46,8 @@ export const HELP_TEXT = { 'it' : "Cosa puoi fare con questo bot?\n\nCiao attrav
 				  "   /enviaaforismo     : Envía un aforismo en español todos los días a las 9:00 am GMT\n" +
 				  "   /chequeaenvio     : Comprueba si estás suscrito al envío diario de un aforismo\n" +
 				  "   /borraenvio     : Eliminar suscripción para el envio diario de un aforismo\n" +
-				  "   aforismo     : Muestra un aforismo aleatorio en versión texto\n" +
-				  "   aforismoim   : Muestra una imagen con un aforismo aleatorio\n",
+				  "   /aforismo     : Muestra un aforismo aleatorio en versión texto\n" +
+				  "   /aforismoim   : Muestra una imagen con un aforismo aleatorio\n",
 			 };
 
 export const NOT_UNDERSTAND_TEXT = { 'it' : ['Nun te capisco, che voi de preciso?',

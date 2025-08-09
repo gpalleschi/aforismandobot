@@ -9,6 +9,15 @@ import sharp from 'sharp';
 const API_TOKEN = process.env.BOT_TOKEN || '';
 const fileChatIds = 'chat_ids.json';
 
+// File dove salvi gli utenti
+const userFile = 'users.json';
+let users = [];
+
+// Carica utenti se esistono
+if (fs.existsSync(userFile)) {
+  users = JSON.parse(fs.readFileSync(userFile));
+}
+
 if (!API_TOKEN) {
     console.error(
         'Seems like you forgot to pass Telegram Bot Token. I can not proceed...'
@@ -261,6 +270,10 @@ bot.command('borraenvio', async (ctx) => {
   delQuote(ctx,'es');
 });
 
+bot.command('stats', async (ctx) => {
+   ctx.reply(`Total Users : ${users.length}`);
+});
+
 // === Daily Message ===
 // Every day at 09:00 am 
 cron.schedule('0 9 * * *', async () => {
@@ -367,6 +380,16 @@ const createImageQuote = async (res) => {
 
 // 📩 Quando arriva un messaggio di testo libero
 bot.on('text', async (ctx) => {
+
+    const userId = ctx.from.id;
+
+    // Se l'utente non è già registrato
+    if (!users.includes(userId)) {
+        users.push(userId);
+        fs.writeFileSync(userFile, JSON.stringify(users));
+        await bot.telegram.sendMessage (ctx.chat.id, `Welcome in Aforsimando ${ctx.from.first_name} !!!`);
+    }
+
     let isImg = false;
     let res = '{}';
     const text = ctx
@@ -374,12 +397,12 @@ bot.on('text', async (ctx) => {
         .text
         .toUpperCase();
 
-    if (text === 'AFORISMA') {
+    if (text === '/AFORISMA') {
         res = await getQuotesByLanguage('it');
-    } else if (text === 'AFORISMAIM' || text === 'AFORISMOIM' || text == 'QUOTEIM') {
-        if (text === 'AFORISMAIM') {
+    } else if (text === '/AFORISMAIM' || text === '/AFORISMOIM' || text == '/QUOTEIM') {
+        if (text === '/AFORISMAIM') {
             res = await getQuotesImgByLanguage('it');
-        } else if (text === 'AFORISMOIM') {
+        } else if (text === '/AFORISMOIM') {
             res = await getQuotesImgByLanguage('es');
         } else {
             res = await getQuotesImgByLanguage('en');
@@ -396,9 +419,9 @@ bot.on('text', async (ctx) => {
         } else {
             res = res.msg;
         }
-    } else if (text === 'AFORISMO') {
+    } else if (text === '/AFORISMO') {
         res = await getQuotesByLanguage('es');
-    } else if (text === 'QUOTE') {
+    } else if (text === '/QUOTE') {
         res = await getQuotesByLanguage('en');
     } else {
         if (res === '{}') {
