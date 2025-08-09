@@ -1,9 +1,9 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-@aforismandobot is a Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.
+@aforismandobot is a Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. It is my first Telegram bot.
 Every day at 09:00 am GMT send an image with an english or spanish or italian quote if you subscribe.   
-Actually is hosted on a IONOS VPS.
+Actually is hosted on a IONOS VPS.  
 
 What can you do with this bot? 
 
@@ -40,6 +40,7 @@ This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_
 <img src="./img/qraforismandobot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 <img src="./img/screenshot0.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 <img src="./img/screenshot.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
+<img src="./img/screenshot1.jpg" alt="Aforismando" style="margin:20px; height: 20%; width:20%;"/>
 </div>
 <hr/>
 
