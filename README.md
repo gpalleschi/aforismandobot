@@ -1,8 +1,8 @@
 <div style="flex">
 <img src="./img/Aforismando.jpg" alt="Aforismando" style="height: 30%; width:30%;"/>
 </div>
-A Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.
-Every day at 09:00 am GMT send a text with an english or spanish or italian quote if you subscribe.   
+@aforismandobot is a Telegram Quote Bot Multilingual (English, Italian and Spanish) text and image. @Aforismandobot. It is my first bot.
+Every day at 09:00 am GMT send an image with an english or spanish or italian quote if you subscribe.   
 Actually is hosted on a IONOS VPS.
 
 What can you do with this bot? 
@@ -27,12 +27,12 @@ What can you do with this bot?
 | /enviaaforismo | es | Send an Spanish text quote every day at 9:00 am (GMT) |
 | /chequeaenvio | es | Check if you are subscribed to spanish text quote daily send |
 | /borraenvio | es | Remove subscribcion to spanish text quote daily send |
-| quote | en | Show random text quote in english |
-| aforismo | es | Show random text quote in spanish |
-| aforisma | it | Show random text quote in italian |
-| quoteim | en | Show random image quote in english |
-| aforismoim | es | Show random image quote in spanish |
-| aforismaim | it | Show random image quote in italian |
+| /quote | en | Show random text quote in english |
+| /aforismo | es | Show random text quote in spanish |
+| /aforisma | it | Show random text quote in italian |
+| /quoteim | en | Show random image quote in english |
+| /aforismoim | es | Show random image quote in spanish |
+| /aforismaim | it | Show random image quote in italian |
 
 This bot use my other project [quotes_api](https://github.com/gpalleschi/quotes_api) hosted on [Vercel](https://quotes-api-three.vercel.app/api/).  
 <hr/>
