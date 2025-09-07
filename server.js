@@ -271,14 +271,34 @@ bot.command('borraenvio', async (ctx) => {
 });
 
 bot.command('stats', async (ctx) => {
-   ctx.reply(`Total Users : ${users.length}`);
+    var totIt = 0;
+    var totEn = 0;
+    var totEs = 0;
+    let chatIds = await getChatIds();
+    let sendUsers = [];
+
+    for (const {chatId, lang} of chatIds) {
+        if (!sendUsers.includes(chatId)) {
+            sendUsers.push(chatId);
+        }
+
+        if (lang === 'it') {
+            totIt += 1;
+        } else if (lang === 'es') {
+            totEs += 1;
+        } else {
+            totEn += 1;
+        }
+    }
+    ctx.reply(`Total Users subscribed to daily quote send : ${sendUsers.length}\n- Italian: ${totIt}\n- Spanish: ${totEs}\n- English: ${totEn}`);
+    ctx.reply(`Total Users : ${users.length}`);
 });
 
 // === Daily Message ===
-// Every day at 09:00 am 
+// Every day at 09:00 am GMT 
 cron.schedule('0 9 * * *', async () => {
 // Every minute
-// cron.schedule('* * * * *', async () => {
+//cron.schedule('* * * * *', async () => {
   const chatIds = await getChatIds();
   for (const { chatId, lang } of chatIds) {
     try {
