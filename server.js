@@ -208,7 +208,7 @@ async function delQuote(ctx, lang) {
   var msgToDisplay = "";
   const chatId = ctx.chat.id;
   let chatIds = await getChatIds();
-  const newChatIds = chatIds.filter(entry => (entry.chatId === chatId && entry.lang === lang));
+  const newChatIds = chatIds.filter(entry => !(entry.chatId === chatId && entry.lang === lang));
   if (newChatIds.length !== chatIds.length) {
     await saveChatIds(newChatIds);
     if ( lang === 'it' ) {

@@ -1,5 +1,5 @@
 export const BOT_NAME ='Aforismandobot';
-export const VERSION ='5.5.0';
+export const VERSION ='5.6.0';
 
 export const URLQUOTEAPI='https://quotes-api-three.vercel.app/api/randomquote?language='; 
 export const URLQUOTEIMGAPI='https://quotes-api-three.vercel.app/api/randomimage?language='; 
